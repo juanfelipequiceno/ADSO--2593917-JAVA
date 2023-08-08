@@ -1,0 +1,60 @@
+una api
+son interfaces para que los progrmas de softeware se comuniquen entre ellos y comparte datos segun estandares
+
+interfaz
+es una capa de astraccion para que dos sistemas se comuniquen 
+
+API (interfaz)
+Application Programming Interface
+
+arquitectura de software
+es la forma en que esta diseñado el sistema 
+
+servivio web
+sistema que permite la comunicacion entre equipos que esten en una red(seguir siertos estandadres por medio del protovcolo http)
+
+REST(Representational State Transfer)
+es una arquitectura, implica se pueden guardar datos en cache y puedes definir que datos permites que otra aplicacion acceda, revise o manipule tu aplicacion
+
+JSON(JavaScript Object Notation)
+
+token(requieren de una auto tenticacion) privada - formato JWT
+
+tipos de API
+
+locales
+se ejecuta dentro el mismo en torno
+
+remotas
+
+Recursos (URI)
+permite consultar directamento un recurso 
+
+codigos de estado   
+2XX exitoso
+3XX redireccion	
+4XX solicitu invalida
+5XX errores 
+
+Metodos http
+GET solitar informacion
+POST enviar nueva informacion
+PUT Actualizar informacion 
+DELETE Borrar un recurso
+
+Formatos
+JSON 
+XML
+TEXTO PLANO
+
+Buenas Practicas
+hateos - se autodescribe
+Seguridad - privada proteger
+Testear - que todo funcione correctamente
+Documentar - funcionar como debe ser
+
+AJAX
+ejecutar de manera asincrono
+
+
+
