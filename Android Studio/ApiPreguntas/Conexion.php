@@ -16,5 +16,3 @@ try{
    echo 'Ha surgido un error y no se puede conectar a la base de datos. Detalle: ' . $e->getMessage();
    exit;
 }
-
-?>
