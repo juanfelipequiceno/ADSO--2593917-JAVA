@@ -33,7 +33,7 @@ import java.util.Map;
 import kotlin.reflect.KFunction;
 
 public class Resumen extends AppCompatActivity {
-    TextView nombre_usuario;
+    TextView nombreUsuario;
     LinearLayout contenedor;
 
     Config config;
@@ -43,9 +43,9 @@ public class Resumen extends AppCompatActivity {
         setContentView(R.layout.activity_resumen);
 
         //EXTRACION ETIQUETAS POR ID
-        nombre_usuario = findViewById(R.id.nombre_usuario);
+        nombreUsuario = findViewById(R.id.nombreUsuario);
         config = new Config(getApplicationContext());
-        contenedor = findViewById(R.id.contenedor_cuestionarios);
+        contenedor = findViewById(R.id.contenedorCuestionarios);
 
         //INTENCION PARA ACAMBIAR DE ACTIVITY
         Intent intencion = getIntent();
@@ -54,11 +54,11 @@ public class Resumen extends AppCompatActivity {
         SharedPreferences archivo = getSharedPreferences("app-preguntas", MODE_PRIVATE);
         String id_usuario = archivo.getString("id_usuario", null);
 
-        nombre_usuario.setText(archivo.getString("nombres", ""));
+        nombreUsuario.setText(archivo.getString("nombres", ""));
 
         // CONSUMO GET PARA TRAER LOS CUESTIONARIOS
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = config.getEndpoint("API-Preguntas/getCuestionario.php");
+        String url = config.getEndpoint("ApiPreguntas/getCuestionario.php");
 
         StringRequest solicitud =  new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -69,10 +69,6 @@ public class Resumen extends AppCompatActivity {
                     boolean valorBooleano = jsonObject.getBoolean("status");
                     if (valorBooleano){
                         agregarCuestionario(jsonObject);
-                        //String id_usuario = jsonObject.getJSONObject("usuario").getString("id_usuario");
-                        //String nombres = jsonObject.getJSONObject("usuario").getString("nombres");
-
-                        //cambiarActivity(id_usuario, nombres);
                     }else{
                         System.out.println("Error en el estado");
                     }
@@ -125,7 +121,6 @@ public class Resumen extends AppCompatActivity {
                 String cant_preguntas = cuestionario.getString("cant_preguntas");
                 TextView textView = new TextView(getApplicationContext());
 
-                // Concatenar los datos en una cadena
                 String texto = "ID: " + cuestionario.getString("id") + "\n" +
                         "CANT PREGUNTAS: " + cuestionario.getString("cant_preguntas") + "\n" +
                         "CANT OK: " + cuestionario.getString("cant_ok") + "\n" +
@@ -133,40 +128,29 @@ public class Resumen extends AppCompatActivity {
                         "FECHA DE INICIO: " + cuestionario.getString("fecha_inicio") + "\n" +
                         "FECHA DE FIN: " + cuestionario.getString("fecha_fin");
 
-                // Definir los parámetros de diseño para el TextView
+                // diseño para el TextView
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, // Ancho
-                        LinearLayout.LayoutParams.WRAP_CONTENT  // Alto
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
                 );
                 layoutParams.setMargins(0, 20, 0, 20);
-                // Establecer el texto
+
                 textView.setText(texto);
-                // Aplicar los parámetros de diseño al TextView
                 textView.setLayoutParams(layoutParams);
 
                 int color = ContextCompat.getColor(this, R.color.verde_claro);
                 textView.setBackgroundColor(color);
 
-                // Crear el botón
-                Button button = new Button(getApplicationContext());
-                button.setText("Ver Detalle");
-                button.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                ));
-                // Asignar el evento onClick al botón
-                button.setOnClickListener(new View.OnClickListener() {
+                textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Llamar a la función que deseas
-                        detalleCuestionario(id , fecha_inicio, cant_preguntas);
+                        detalleCuestionario(id, fecha_inicio, cant_preguntas);
                     }
                 });
-                // Agregar el TextView al contenedor
+
                 contenedor.addView(textView);
-                 // Agregar el botón al contenedor
-                contenedor.addView(button);
             }
+
 
 
 
@@ -187,7 +171,7 @@ public class Resumen extends AppCompatActivity {
         finish();
     }
 
-    public void activityCrearCuestionario(View view) {
+    public void CrearCuestionario(View view) {
         Intent intencion = new Intent(getApplicationContext(), CrearCuestionario.class);
         startActivity(intencion);
 

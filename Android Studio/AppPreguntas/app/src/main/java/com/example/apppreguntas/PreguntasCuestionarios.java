@@ -36,19 +36,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PreguntasCuestionarios extends AppCompatActivity {
-    TextView nombre_usuario;
-    TextView fecha_inicio;
-    TextView pregunta_actual;
+    TextView nombreUsuario;
+    TextView fechaInicio;
+    TextView preguntaActual;
     Config config;
     LinearLayout layoutPrincipal;
     TextView descripcionPreguntas;
-    ImageView consumo_imagen;
-    RadioGroup radio_group;
-    String id_pregunta;
-    String fecha_actual;
-    String id_respuesta_corecta;
-    TextView cant_pregunta;
-    String id_cuestionario;
+    ImageView consumoImagen;
+    RadioGroup radioGroup;
+    String idPregunta;
+    String fechaActual;
+    String idRespuestaCorecta;
+    TextView cantPregunta;
+    String idCuestionario;
     int cont = 0;
     int preguntas_db;
     @SuppressLint("MissingInflatedId")
@@ -57,37 +57,37 @@ public class PreguntasCuestionarios extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preguntas_cuestionarios);
 
-        nombre_usuario = findViewById(R.id.usuario);
-        fecha_inicio = findViewById(R.id.fecha_inicio);
-        pregunta_actual = findViewById(R.id.pregunta_actual);
-        descripcionPreguntas = findViewById(R.id.descripcion_pregunta);
-        consumo_imagen = findViewById(R.id.imgen_consumo);
-        layoutPrincipal = findViewById(R.id.layout_principal);
-        cant_pregunta = findViewById(R.id.pregunta_actual);
-        radio_group = findViewById(R.id.radio_group);
+        nombreUsuario = findViewById(R.id.usuario);
+        fechaInicio = findViewById(R.id.fechaInicio);
+        preguntaActual = findViewById(R.id.preguntaActual);
+        descripcionPreguntas = findViewById(R.id.descripcionPregunta);
+        consumoImagen = findViewById(R.id.imgenConsumo);
+        layoutPrincipal = findViewById(R.id.layoutPrincipal);
+        cantPregunta = findViewById(R.id.preguntaActual);
+        radioGroup = findViewById(R.id.radioGroup);
         config = new Config(getApplicationContext());
 
 
         Intent intent = getIntent();
-        //VARIABLE DE SESION
+
         SharedPreferences archivo = getSharedPreferences("app-preguntas", MODE_PRIVATE);
-        String id_usuario = archivo.getString("id_usuario", null);
+        String idUsuario = archivo.getString("id_usuario", null);
 
-        nombre_usuario.setText(archivo.getString("nombres", ""));
-        id_cuestionario = intent.getStringExtra("id");
-        fecha_actual= intent.getStringExtra("fecha_actual");
+        nombreUsuario.setText(archivo.getString("nombres", ""));
+        idCuestionario = intent.getStringExtra("id");
+        fechaActual= intent.getStringExtra("fecha_actual");
 
-        nombre_usuario.setText(archivo.getString("nombres", ""));
-        fecha_inicio.setText(fecha_actual);
+        nombreUsuario.setText(archivo.getString("nombres", ""));
+        fechaInicio.setText(fechaActual);
 
         consumoPreguntas();
 
     }
 
     public void consumoPreguntas(){
-        // CONSUMO GET PARA TRAER LOS CUESTIONARIOS
+
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = config.getEndpoint("API-Preguntas/getOtherPregunta.php");
+        String url = config.getEndpoint("ApiPreguntas/getObtenerPregunta.php");
 
         StringRequest solicitud =  new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -117,7 +117,7 @@ public class PreguntasCuestionarios extends AppCompatActivity {
         }){
             protected Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id_cuestionario", id_cuestionario);
+                params.put("id_cuestionario", idCuestionario);
                 return params;
             }
         };
@@ -127,7 +127,7 @@ public class PreguntasCuestionarios extends AppCompatActivity {
     public void imprimirPreguntas(JSONObject jsonObject){
         cont += 1;
         String contString = String.valueOf(cont);
-        cant_pregunta.setText(contString);
+        cantPregunta.setText(contString);
 
         try {
             preguntas_db = jsonObject.getInt("cant_preguntas");
@@ -137,16 +137,16 @@ public class PreguntasCuestionarios extends AppCompatActivity {
 
             // Crear TextView para la descripción de la pregunta
             String descripcionPregunta = preguntaJson.getString("descripcion");
-            id_pregunta = preguntaJson.getString("id");
+            idPregunta = preguntaJson.getString("id");
             String id_correcta = preguntaJson.getString("id_correcta");
 
             descripcionPreguntas.setText(descripcionPregunta);
 
 
-            // Obtener la URL de la imagen
+
             String urlImagen = preguntaJson.getString("url_imagen");
 
-            // Solicitar la imagen
+
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
             ImageRequest solicitud = new ImageRequest(
                     urlImagen,
@@ -154,7 +154,7 @@ public class PreguntasCuestionarios extends AppCompatActivity {
                         @Override
                         public void onResponse(Bitmap bitmap) {
                             // Set the image in the ImageView.
-                            consumo_imagen.setImageBitmap(bitmap);
+                            consumoImagen.setImageBitmap(bitmap);
                         }
                     },
                     0, 0, null, // maxWidth, maxHeight, decodeConfig;
@@ -167,14 +167,14 @@ public class PreguntasCuestionarios extends AppCompatActivity {
                     });
 
             queue.add(solicitud);
-            radio_group.removeAllViews();
+            radioGroup.removeAllViews();
             for (int i = 0; i < opcionesJson.length(); i++) {
                 JSONObject opcionJson = opcionesJson.getJSONObject(i);
                 String id_opcion = opcionJson.getString("id");
                 String descripcionOpcion = opcionJson.getString("descripcion");
 
                 if (id_correcta.equals(id_opcion)){
-                    id_respuesta_corecta = descripcionOpcion;
+                    idRespuestaCorecta = descripcionOpcion;
                 }
 
                 RadioButton radioButton = new RadioButton(getApplicationContext());
@@ -182,9 +182,9 @@ public class PreguntasCuestionarios extends AppCompatActivity {
                 radioButton.setLayoutParams(new RadioGroup.LayoutParams(
                         RadioGroup.LayoutParams.MATCH_PARENT,
                         RadioGroup.LayoutParams.WRAP_CONTENT));
-                radioButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20); // Establecer tamaño de texto
+                radioButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 
-                radio_group.addView(radioButton);
+                radioGroup.addView(radioButton);
 
             }
 
@@ -196,126 +196,88 @@ public class PreguntasCuestionarios extends AppCompatActivity {
 
     }
 
-    public void cambiarPregunta(View view){
+    public void cambiarPregunta(View view) {
 
-        if (cont == preguntas_db){
-            String estado;
-            int id_radio = radio_group.getCheckedRadioButtonId();
-            RadioButton seleccionado = findViewById(id_radio);
-            if (seleccionado != null) {
-                String respuesta_radio = seleccionado.getText().toString();
+        view.setEnabled(false);
 
-                if (respuesta_radio.equals(id_respuesta_corecta)){
-                    estado = "OK";
-                }else{
-                    estado = "ERROR";
-                }
-                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                String url = config.getEndpoint("API-Preguntas/createRespuesta.php");
+        int idRadio = radioGroup.getCheckedRadioButtonId();
+        RadioButton seleccionado = findViewById(idRadio);
 
-                StringRequest solicitud =  new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            System.out.println("El servidor POST responde OK");
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean valorBooleano = jsonObject.getBoolean("status");
+        if (seleccionado != null) {
+            String respuestaRadio = seleccionado.getText().toString();
+            String estado = respuestaRadio.equals(idRespuestaCorecta) ? "OK" : "ERROR";
 
-                            if (valorBooleano){
+            // Enviar respuesta al servidor
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+            String url = config.getEndpoint("ApiPreguntas/crearRespuesta.php");
+
+            StringRequest solicitud =  new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    // Habilitar el botón nuevamente después de completar la solicitud
+                    view.setEnabled(true);
+
+                    try {
+                        System.out.println("El servidor POST responde OK");
+                        JSONObject jsonObject = new JSONObject(response);
+                        boolean valorBooleano = jsonObject.getBoolean("status");
+
+                        if (valorBooleano){
+                            cont++;
+
+                            if (cont <= preguntas_db) {
+
                                 consumoPreguntas();
-                            }else{
-                                System.out.println("Error en el estado");
+                            } else {
+
+
+                                Intent intent = new Intent(getApplicationContext(), Resumen.class);
+                                startActivity(intent);
+                                finish();
                             }
 
-                        } catch (JSONException e) {
-                            System.out.println("El servidor POST responde con un error:");
-                            System.out.println(e.getMessage());
+                        } else {
+                            System.out.println("Error en el estado");
                         }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("El servidor POST responde con un error:");
-                        System.out.println(error.getMessage());
-                    }
-                }){
-                    protected Map<String, String> getParams(){
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("id_cuestionario", id_cuestionario);
-                        params.put("id_pregunta", id_pregunta);
-                        params.put("respuesta", respuesta_radio);
-                        params.put("estado", estado);
-                        params.put("fecha", fecha_actual);
-                        return params;
-                    }
-                };
-                queue.add(solicitud);
-            } else {
-                // Si no se seleccionó ningún RadioButton
-                System.out.println("Ninguna opción seleccionada");
-            }
-            Intent intencion = new Intent(getApplicationContext(), DetalleCuestionario.class);
-            startActivity(intencion);
-            finish();
-        }else {
-            String estado;
-            int id_radio = radio_group.getCheckedRadioButtonId();
-            RadioButton seleccionado = findViewById(id_radio);
-            if (seleccionado != null) {
-                String respuesta_radio = seleccionado.getText().toString();
 
-                if (respuesta_radio.equals(id_respuesta_corecta)){
-                    estado = "OK";
-                }else{
-                    estado = "ERROR";
+                    } catch (JSONException e) {
+                        System.out.println("El servidor POST responde con un error:");
+                        System.out.println(e.getMessage());
+                    }
                 }
-                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                String url = config.getEndpoint("API-Preguntas/createRespuesta.php");
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // Habilitar el botón nuevamente en caso de error
+                    view.setEnabled(true);
 
-                StringRequest solicitud =  new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            System.out.println("El servidor POST responde OK");
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean valorBooleano = jsonObject.getBoolean("status");
-
-                            if (valorBooleano){
-                                consumoPreguntas();
-                            }else{
-                                System.out.println("Error en el estado");
-                            }
-
-                        } catch (JSONException e) {
-                            System.out.println("El servidor POST responde con un error:");
-                            System.out.println(e.getMessage());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("El servidor POST responde con un error:");
-                        System.out.println(error.getMessage());
-                    }
-                }){
-                    protected Map<String, String> getParams(){
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("id_cuestionario", id_cuestionario);
-                        params.put("id_pregunta", id_pregunta);
-                        params.put("respuesta", respuesta_radio);
-                        params.put("estado", estado);
-                        params.put("fecha", fecha_actual);
-                        return params;
-                    }
-                };
-                queue.add(solicitud);
-            } else {
-                // Si no se seleccionó ningún RadioButton
-                System.out.println("Ninguna opción seleccionada");
-            }
+                    System.out.println("El servidor POST responde con un error:");
+                    System.out.println(error.getMessage());
+                }
+            }){
+                protected Map<String, String> getParams(){
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("id_cuestionario", idCuestionario);
+                    params.put("id_pregunta", idPregunta);
+                    params.put("respuesta", respuestaRadio);
+                    params.put("estado", estado);
+                    params.put("fecha", fechaActual);
+                    return params;
+                }
+            };
+            queue.add(solicitud);
+        } else {
+            // Habilitar el botón nuevamente en caso de que ninguna opción esté seleccionada
+            view.setEnabled(true);
+            System.out.println("Ninguna opción seleccionada");
         }
-
     }
+
+
+
+
+
+
 
 
 }

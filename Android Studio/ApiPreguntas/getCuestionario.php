@@ -2,10 +2,10 @@
 include "Conexion.php";
 
 if (!empty($_POST["id_usuario"]) || !empty($_GET["id_usuario"])) {
-    $id_usuario = (!empty($_POST["id_usuario"]))? $_POST["id_usuario"]: $_GET["id_usuario"];
+    $idUsuario = (!empty($_POST["id_usuario"]))? $_POST["id_usuario"]: $_GET["id_usuario"];
 
     $consulta = $base_de_datos->prepare("SELECT * FROM cuestionarios WHERE id_usuario = :id ");
-    $consulta->bindParam(":id", $id_usuario);
+    $consulta->bindParam(":id", $idUsuario);
 
     $consulta->execute();
     $datos =  $consulta->fetchAll(PDO::FETCH_ASSOC);

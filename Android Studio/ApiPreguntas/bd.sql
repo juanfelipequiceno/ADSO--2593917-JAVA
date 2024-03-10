@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 29-02-2024 a las 17:44:25
--- Versión del servidor: 10.4.27-MariaDB
--- Versión de PHP: 8.2.0
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 26-01-2024 a las 15:01:35
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `preguntas_db`
+-- Base de datos: `preguntas_v2_db`
 --
 
 -- --------------------------------------------------------

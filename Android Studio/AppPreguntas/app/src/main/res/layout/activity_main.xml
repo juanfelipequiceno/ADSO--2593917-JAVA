@@ -33,7 +33,7 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
-            android:src="@mipmap/cerrar_sesion"
+            android:src="@mipmap/cerrarsesion"
             android:layout_marginBottom="40dp"
             ></ImageView>
 
@@ -46,7 +46,7 @@
             ></TextView>
 
         <EditText
-            android:id="@+id/campo_correo"
+            android:id="@+id/campoCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="andres@gmail.com"
@@ -62,7 +62,7 @@
             ></TextView>
 
         <EditText
-            android:id="@+id/campo_password"
+            android:id="@+id/campoPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="12345"

@@ -27,7 +27,7 @@
             android:textSize="30dp"
             ></TextView>
         <TextView
-            android:id="@+id/fecha_inicio"
+            android:id="@+id/fechaInicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2023-03-03 12:00:00"
@@ -48,7 +48,7 @@
             android:textSize="30dp"
             ></TextView>
         <TextView
-            android:id="@+id/pregunta_actual"
+            android:id="@+id/preguntaActual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="6"
@@ -69,13 +69,13 @@
         android:layout_marginTop="10dp">
 
         <LinearLayout
-            android:id="@+id/layout_principal"
+            android:id="@+id/layoutPrincipal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
             <TextView
-                android:id="@+id/descripcion_pregunta"
+                android:id="@+id/descripcionPregunta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Incio:"
@@ -84,14 +84,14 @@
                 android:layout_marginTop="10dp"
                 ></TextView>
             <ImageView
-                android:id="@+id/imgen_consumo"
+                android:id="@+id/imgenConsumo"
                 android:layout_width="300dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 ></ImageView>
             <RadioGroup
-                android:id="@+id/radio_group"
+                android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

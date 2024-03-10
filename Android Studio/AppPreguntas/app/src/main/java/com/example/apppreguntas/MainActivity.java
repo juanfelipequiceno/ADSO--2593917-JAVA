@@ -23,16 +23,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    EditText campo_correo;
-    EditText campo_password;
+    EditText campoCorreo;
+    EditText campoPassword;
     Config config;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        campo_correo = findViewById(R.id.campo_correo);
-        campo_password = findViewById(R.id.campo_password);
+        campoCorreo = findViewById(R.id.campoCorreo);
+        campoPassword = findViewById(R.id.campoPassword);
         config = new Config(getApplicationContext());
 
         validarSesion();
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void validarIngreso(View vista){
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = config.getEndpoint("API-Preguntas/validarIngreso.php");
+        String url = config.getEndpoint("ApiPreguntas/validarIngreso.php");
 
         StringRequest solicitud =  new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         }){
             protected Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("correo", campo_correo.getText().toString());
-                params.put("password", campo_password.getText().toString());
+                params.put("correo", campoCorreo.getText().toString());
+                params.put("password", campoPassword.getText().toString());
                 return params;
             }
         };

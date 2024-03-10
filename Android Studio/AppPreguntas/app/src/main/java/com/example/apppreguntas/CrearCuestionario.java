@@ -25,17 +25,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CrearCuestionario extends AppCompatActivity {
-    TextView nombre_usuario;
+    TextView nombreUsuario;
     TextView fecha;
-    String id_usuario_post;
-    String fecha_actual;
+    String idUsuarioPost;
+    String fechaActual;
     Config config;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_cuestionario);
 
-        nombre_usuario = findViewById(R.id.nombre_usuario);
+        nombreUsuario = findViewById(R.id.nombreUsuario);
         fecha = findViewById(R.id.fecha);
         config = new Config(getApplicationContext());
         // Obtenemos la fecha y hora actual
@@ -45,18 +45,17 @@ public class CrearCuestionario extends AppCompatActivity {
 
         SharedPreferences archivo = getSharedPreferences("app-preguntas", MODE_PRIVATE);
         String id_usuario = archivo.getString("id_usuario", null);
-        id_usuario_post = id_usuario;
-        fecha_actual = fechaHoraFormateada;
+        idUsuarioPost = id_usuario;
+        fechaActual = fechaHoraFormateada;
 
-        nombre_usuario.setText(archivo.getString("nombres", ""));
+        nombreUsuario.setText(archivo.getString("nombres", ""));
         fecha.setText(""+fechaHoraFormateada);
 
     }
 
-    public void consumoInsertCuestionario (View view){
-        // CONSUMO GET PARA TRAER LOS CUESTIONARIOS
+    public void InsertCuestionario (View view){
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = config.getEndpoint("API-Preguntas/createCuestionario.php");
+        String url = config.getEndpoint("ApiPreguntas/crearCuestionario.php");
 
         StringRequest solicitud =  new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -86,8 +85,8 @@ public class CrearCuestionario extends AppCompatActivity {
         }){
             protected Map<String, String> getParams(){
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id_usuario", id_usuario_post);
-                params.put("fecha_inicio", fecha_actual);
+                params.put("id_usuario", idUsuarioPost);
+                params.put("fecha_inicio", fechaActual);
                 return params;
             }
         };
@@ -101,7 +100,7 @@ public class CrearCuestionario extends AppCompatActivity {
             id_cuestionario = objeto.getString("id_cuestionario");
             Intent intencion = new Intent(getApplicationContext(), PreguntasCuestionarios.class);
             intencion.putExtra("id",id_cuestionario);
-            intencion.putExtra("fecha_actual", fecha_actual);
+            intencion.putExtra("fecha_actual", fechaActual);
             startActivity(intencion);
 
             finish();
