@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
+
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -20,7 +21,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.JarException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     int currentPage = 0;
     int totalPages;
     Button btnAtras, btnSiguiente ;
-
     AdaptadorPokemon adapter;
 
     @Override
@@ -40,28 +39,33 @@ public class MainActivity extends AppCompatActivity {
         btnAtras = findViewById(R.id.btnAtras);
         btnSiguiente = findViewById(R.id.btnSiguiente);
         recycler = findViewById(R.id.listadoPokemon);
-        recycler.setLayoutManager( new LinearLayoutManager(this));
-        adapter = new AdaptadorPokemon(pokemonList);
-        recycler.setAdapter(adapter);
+        /*ImageView loadListaPokemon = findViewById(R.id.loadListaPokemon);
+        Glide.with(this)
+                        .asGif()
+                        .load(R.drawable.loading_pokeball)
+                        .into(loadListaPokemon);*/
         pokemonData();
     }
 
-
     public void pokemonData(){
-        String url = "https://pokeapi.co/api/v2/pokemon";
-        JsonObjectRequest request =  new JsonObjectRequest(Request.Method.GET,url, null, response -> {
+        String endpoint = "https://pokeapi.co/api/v2/pokemon";
+        JsonObjectRequest request =  new JsonObjectRequest(Request.Method.GET,endpoint, null, response -> {
+
+            System.out.println(response.toString());
             try {
                 JSONArray results = response.getJSONArray("results");
 
                 for (int i = 0; i < results.length();i++){
                     JSONObject pokemonObjet = results.getJSONObject(i);
                     String name = pokemonObjet.getString("name");
-                    String urlp = pokemonObjet.getString("url");
-                    pokemonList.add(new Pokemon(name, urlp));
-
-
-
+                    String url = pokemonObjet.getString("url");
+                    pokemonList.add(new Pokemon(name, url));
+                    System.out.println(name);
+                    adapter = new AdaptadorPokemon(pokemonList);
+                    recycler.setAdapter(adapter);
+                    recycler.setLayoutManager( new LinearLayoutManager(getApplicationContext()));
                 }
+
             }catch (JSONException e){
                 e.printStackTrace();
 
