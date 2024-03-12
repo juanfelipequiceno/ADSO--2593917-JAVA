@@ -30,39 +30,93 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/listadoPokemon"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:layout_margin="10dp">
+                    android:layout_height="match_parent" />
 
-                </androidx.recyclerview.widget.RecyclerView>
+                <LinearLayout
+                    android:id="@+id/pokemonDetailsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/pokemonName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Name: "
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/pokemonImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/icono_pokeball" />
+
+
+
+                    <TextView
+                        android:id="@+id/pokemonHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Height: "
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/pokemonWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Weight: "
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/pokemonAbilities"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Abilities: "
+                        android:textSize="16sp" />
+                </LinearLayout>
 
             </LinearLayout>
 
 
 
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom|center">
+            android:layout_gravity="bottom|center"
+            android:orientation="horizontal">
 
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom|left"
-                android:src="@drawable/btn_stylo"
-                android:backgroundTint="@color/blue"
-                android:text="ANTERIOR">
-
-            </Button>
-            <Button
+                android:id="@+id/btnAtras"
+                android:onClick="onbtnAtrasClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
+                android:background="@drawable/btn_stylo"
                 android:backgroundTint="@color/blue"
-                android:text="SIGUIENTE">
+                android:text="ANTERIOR"
+                android:textSize="30dp">
+
+            </Button>
+
+            <Button
+                android:id="@+id/btnSiguiente"
+                android:onClick="onbtnSiguienteClick"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_stylo"
+                android:backgroundTint="@color/blue"
+                android:text="SIGUIENTE"
+                android:textSize="30dp">
 
             </Button>
         </LinearLayout>
