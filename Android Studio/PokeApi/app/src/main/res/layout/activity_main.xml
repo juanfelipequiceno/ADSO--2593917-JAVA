@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+        android:src="@drawable/titulo_pokemon"
+
+        ></ImageView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_listado"
+        android:layout_width="match_parent"
+        android:layout_height="598dp"></androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/button_bacground"
+            android:backgroundTint="@color/azul"
+            android:text="ANTERIOR"></Button>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_bacground"
+            android:onClick="cargarSiguiente"
+            android:text="SIGUIENTE"></Button>
+    </LinearLayout>
+
+</LinearLayout>
