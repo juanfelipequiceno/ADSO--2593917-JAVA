@@ -38,8 +38,8 @@ public class AdaptadorPokemon extends RecyclerView.Adapter<AdaptadorPokemon.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Pokemon pokemon = pokemonList.get(position);
-        holder.cargarDatos(pokemon);
+            Pokemon pokemon = pokemonList.get(position);
+            holder.cargarDatos(pokemon);
 
     }
 
@@ -53,6 +53,8 @@ public class AdaptadorPokemon extends RecyclerView.Adapter<AdaptadorPokemon.View
         TextView namePokemon;
         ImageView imagenBoton;
 
+
+
         Context contexto;
         ViewHolder(View itemView) {
             super(itemView);
@@ -64,23 +66,15 @@ public class AdaptadorPokemon extends RecyclerView.Adapter<AdaptadorPokemon.View
 
         public void cargarDatos(Pokemon pokemon){
             namePokemon.setText(pokemon.getName());
-            String name = pokemon.getName();
-            String url = pokemon.getUrl();
             imagenBoton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    cambiarActivity(name, url);
+                    Intent intencion = new Intent(contexto, DetallesPokemon.class);
+                    intencion.putExtra("url", pokemon.getUrl());
+                    contexto.startActivity(intencion);
                 }
             });
 
-        }
-
-        public void cambiarActivity(String name, String url){
-            Intent intencion = new Intent(contexto, DetallesPokemon.class);
-            intencion.putExtra("name",name);
-            intencion.putExtra("url",url);
-
-            contexto.startActivity(intencion);
         }
     }
 
