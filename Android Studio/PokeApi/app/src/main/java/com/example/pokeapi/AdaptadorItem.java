@@ -13,11 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class AdaptadorItem extends RecyclerView.Adapter< AdaptadorItem.ViewHolder> {
+public class AdaptadorItem extends RecyclerView.Adapter<AdaptadorItem.ViewHolder> {
 
     List<Pokemon> listaPokemons;
-    //constructo
-    public AdaptadorItem(List<Pokemon> lista){this.listaPokemons = lista;}
+
+
+    public AdaptadorItem(List<Pokemon> lista){
+        this.listaPokemons = lista;
+
+    }
 
     @NonNull
     @Override
@@ -54,16 +58,26 @@ public class AdaptadorItem extends RecyclerView.Adapter< AdaptadorItem.ViewHolde
         public void cargarDatos(Pokemon dato){
             numero_pokemon.setText(dato.getNum_pokemon());
             nombre_pokemon.setText(dato.getNombre());
+            String nombre = dato.getNombre();
+            String url = dato.getUrl();
 
             img_pokeball.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intencion = new Intent(context, DetallePokemon.class);
-                    intencion.putExtra("url", dato.getUrl());
-                    context.startActivity(intencion);
+                    cambiarActivity(nombre, url);
                 }
             });
 
         }
+
+        public void cambiarActivity(String nombre, String url){
+            Intent intencion = new Intent(context, DetallePokemon.class);
+            intencion.putExtra("nombre",nombre);
+            intencion.putExtra("url", url);
+            System.out.println(nombre+url);
+            context.startActivity(intencion);
+        }
+
+
     }
 }
